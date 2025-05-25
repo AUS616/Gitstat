@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitStat</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body class="min-h-screen">
+    <div class="flex flex-col items-center justify-center mt-8 sm:mt-12 md:mt-16 lg:mt-20 px-4">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-9xl text-center">
+            <span class="text-[#75D8A6]">Git</span>stat
+        </h1>
+        <p class="text-base sm:text-lg md:text-xl mt-2 pl-5 text-center">A simple tool that fetches your github stats.</p>
+
+        <form method="POST">
+            <input type="text" name="username" class=
+            "w-full sm:w-96 border-black border-2 p-2.5 focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#75D8A6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] rounded-full mt-5"
+            placeholder="Enter your github username"
+            required>
+            
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p> 
+        {% endif %} 
+
+        {% if user_data %}
+        <div class="flex flex-col lg:flex-row gap-5 mt-10 w-full max-w-7xl px-4 ">
+            <div class="w-full lg:w-80 h-full bg-white border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] scale-100 hover:scale-105 transition ease-in-out duration-300 ">
+                <a href="" class="block cursor-pointer">
+                   <article class="w-full h-full">
+                    
+                    <figure class="flex items-center justify-center">
+                        <img
+                          src="{{user_data.avatar_url}}"
+                          alt="thumbnail"
+                          class="w-24 sm:w-32 h-24 sm:h-32 object-cover rounded-full border-2 mt-2 border-black"
+                        />
+                    </figure>
+                      <div class="mb-6 px-4">
+                        <h1 class="text-center text-xl sm:text-2xl font-bold mb-2">{{ user_data.name }}</h1>
+                        <p class="text-center text-sm leading-relaxed">{{user_data.bio or "No bio available"}}</p>
+                        <p class="text-left ml-2 pt-5 text-sm sm:text-base"><i class="fa-solid fa-location-dot"></i> {{user_data.location or "No location available"}}</p>
+                        <a class="text-left ml-2 pt-2 text-sm sm:text-base block" href="{{user_data.blog}}"><i class="fa-solid fa-up-right-from-square"></i> {{user_data.blog or "No Link available"}}</a>
+                      </div>
+                      <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-6 p-3">
+                        <div class="text-center p-2 sm:p-3 bg-[#75D8A6] rounded-lg border border-black">
+                            <div class="text-lg sm:text-xl font-bold text-gray-900">{{user_data.followers }}</div>
+                            <div class="text-xs text-black font-medium">Followers</div>
+                        </div>
+                        <div class="text-center p-2 sm:p-3 bg-[#75D8A6] rounded-lg border border-black">
+                            <div class="text-lg sm:text-xl font-bold text-gray-900">{{user_data.following}}</div>
+                            <div class="text-xs text-black font-medium">Following</div>
+                        </div>
+                        <div class="text-center p-2 sm:p-3 bg-[#75D8A6] rounded-lg border border-black">
+                            <div class="text-lg sm:text-xl font-bold text-gray-900">{{total_stars}}</div>
+                            <div class="text-xs text-black font-medium">Stars</div>
+                        </div>
+                        
+                        
+                      </div>
+                      
+                   </article>
+                </a>
+             </div>
+    
+             <div class="w-full lg:flex-1 h-full border-black border-4 rounded-md">
+                <a href="" class="block cursor-pointer">
+                   <article class="w-full h-full">
+                      
+                      <div class="px-4 sm:px-6 py-5 text-left h-full">
+                        <h1 class="text-2xl sm:text-3xl lg:text-[32px] font-bold mb-4">Repositories: {{user_data.public_repos}}</h1>
+                        <ul>
+                            {% for repo in repos %}
+
+                                <div class="w-full px-4 sm:px-6 lg:px-8 py-4 bg-[#75D8A6] border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] flex flex-col place-content-left opacity-90 scale-95 hover:opacity-100 hover:scale-100 transition ease-in-out duration-300 mb-2">
+                                    <li>
+                                        <a href="{{ repo.html_url}}" target = "_blank"
+                                        class="font-bold text-lg sm:text-lg">{{repo.name}}</a>
+                                        <p class="text-sm">{{repo.description or "No 
+                                        description available"}}</p>
+                                        <div class="flex flex-row gap-2 sm:gap-4 text-sm flex-wrap">
+                                            <p>⭐: {{repo.stargazers_count}}</p>
+                                            <p>🍴: {{repo.forks_count or "0"}}</p>
+                                            <p>👀: {{repo.watchers_count or "0"}}</p>
+                                        </div>
+                                        
+                                    </li>
+                                </div>
+                            {% endfor %}
+                        </ul>
+
+
+                         
+                        
+                      </div>
+                   </article>
+                </a>
+             </div>
+        </div>
+
+        
+        {% endif %}
+
+        
+        
+        
+    </div>
+    <footer>
+        <div class="flex flex-col justify-center items-center mt-10 mb-5">
+            <p class="text-lg text-black font-bold">Developed by <a class="underline decoration-dotted hover:text-[#F3532A]" href="https://github.com/AUS616">Aus616</a></p>
+        </div>
+            
+    </footer>
+    
+</body>
+</html>
