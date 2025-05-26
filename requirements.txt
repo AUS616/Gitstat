@@ -1,4 +1,4 @@
-apparmor==4.0.3
+
 application-utility==1.4.0
 argcomplete==3.5.3
 attrs==23.2.1.dev0
