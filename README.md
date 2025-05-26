@@ -11,7 +11,7 @@ This project is a work in progress, and more features will be added soon! Contri
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) 	![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 
 ## Screenshots
-![Home Screen](screenshot/homepage.png)
+![Home Screen](screenshot/Homepage.png)
 ![result](screenshot/result.png)
 
 ## Build
