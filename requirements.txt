@@ -1,4 +1,4 @@
-
+gunicorn==23.0.0
 application-utility==1.4.0
 argcomplete==3.5.3
 attrs==23.2.1.dev0
