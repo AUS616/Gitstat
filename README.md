@@ -18,11 +18,9 @@ This project is a work in progress, and more features will be added soon! Contri
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/AUS616/Gitstat.git
-  
-   
 2. **Navigate to the Project Directory:**
     ```bash
-   cd Bunkify 
+   cd Gitstat
 3. **Create & activate the Virtual Environment:**
    ```bash
    python3 -m venv venv
